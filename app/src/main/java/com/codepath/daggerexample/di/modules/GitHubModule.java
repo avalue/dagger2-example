@@ -5,7 +5,7 @@ import com.codepath.daggerexample.network.interfaces.GitHubApiInterface;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
 
 @Module
 public class GitHubModule {

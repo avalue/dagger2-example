@@ -1,5 +1,7 @@
 package com.codepath.daggerexample;
 
+import android.app.Application;
+
 import com.codepath.daggerexample.di.components.DaggerGitHubComponent;
 import com.codepath.daggerexample.di.components.DaggerNetComponent;
 import com.codepath.daggerexample.di.components.GitHubComponent;
@@ -7,8 +9,6 @@ import com.codepath.daggerexample.di.components.NetComponent;
 import com.codepath.daggerexample.di.modules.AppModule;
 import com.codepath.daggerexample.di.modules.GitHubModule;
 import com.codepath.daggerexample.di.modules.NetModule;
-
-import android.app.Application;
 
 public class MyApp extends Application {
 

@@ -1,22 +1,21 @@
 package com.codepath.daggerexample.di.modules;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetModule {
@@ -29,7 +28,7 @@ public class NetModule {
 
     @Provides
     @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
+    SharedPreferences provideSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
@@ -53,19 +52,16 @@ public class NetModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(Cache cache) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setCache(cache);
-        return okHttpClient;
+        return new OkHttpClient.Builder().cache(cache).build();
     }
 
     @Provides
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .build();
-        return retrofit;
     }
 }

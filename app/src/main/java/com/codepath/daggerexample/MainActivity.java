@@ -1,8 +1,5 @@
 package com.codepath.daggerexample;
 
-import com.codepath.daggerexample.models.Repository;
-import com.codepath.daggerexample.network.interfaces.GitHubApiInterface;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,14 +11,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.codepath.daggerexample.models.Repository;
+import com.codepath.daggerexample.network.interfaces.GitHubApiInterface;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,19 +49,18 @@ public class MainActivity extends AppCompatActivity {
 
                     call.enqueue(new Callback<ArrayList<Repository>>() {
                         @Override
-                        public void onResponse(Response<ArrayList<Repository>> response, Retrofit retrofit) {
-                            if (response.isSuccess()) {
+                        public void onResponse(Call<ArrayList<Repository>> call, Response<ArrayList<Repository>> response) {
+                            if (response.isSuccessful()) {
                                 Log.i("DEBUG", response.body().toString());
-                                Snackbar.make(view,"Data retrieved", Snackbar.LENGTH_LONG)
-                                        .setAction("Action",null).show();
+                                Snackbar.make(view, "Data retrieved", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                             } else {
                                 Log.i("ERROR", String.valueOf(response.code()));
                             }
-
                         }
 
                         @Override
-                        public void onFailure(Throwable t) {
+                        public void onFailure(Call<ArrayList<Repository>> call, Throwable t) {
 
                         }
                     });
